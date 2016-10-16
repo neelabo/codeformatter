@@ -192,7 +192,22 @@ namespace Microsoft.DotNet.CodeFormatting.Rules
         {
             if (isInstance)
             {
-                return name.Length > 0 && name[0] == '_';
+                if (name.Length == 0)
+                {
+                    return false;
+                }
+                else if (name.Length == 1)
+                {
+                    return name[0] == '_';
+                }
+                else if (name.Length == 2)
+                {
+                    return name[0] == '_' && char.IsLower(name[1]);
+                }
+                else
+                {
+                    return name[0] == '_' && (char.IsLower(name[1]) || (char.IsUpper(name[1]) && char.IsUpper(name[2])));
+                }
             }
             else
             {
